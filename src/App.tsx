@@ -1,9 +1,13 @@
 import { useState } from 'react';
 import slidesData from './assets/data/pageData';
 import { getImageUrl } from './utils/image-utils';
+import OrganDropdown from './components/DropDown';
+import SlideItem from './components/SlideItem';
 import { FaLinkedin, FaGithub } from 'react-icons/fa';
 import { HiOutlineAcademicCap } from "react-icons/hi";
 import { PiLineVertical } from "react-icons/pi";
+import { SlScreenSmartphone } from "react-icons/sl";
+import { MdOutlineComputer } from "react-icons/md";
 
 interface SlideData {
   id: number;
@@ -16,73 +20,76 @@ interface SlideData {
 
 function App() {
   const [isClicked, setIsClicked] = useState<number | boolean>(false);
+  const [selectedOrgan, setSelectedOrgan] = useState('');
+
+  const organs = Array.from(new Set(slidesData.map(slide => slide.organ)));
+
+  const filteredSlides = slidesData.filter(slide =>
+    (selectedOrgan ? slide.organ === selectedOrgan : true)
+  );
 
   const toggleImage = (id: number) => {
     setIsClicked(id);
-  }
+  };
+  
   const resetImage = () => {
     setIsClicked(false);
-  }
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
+      {/* Header */}
       <header className="bg-blue-600 text-white p-4 shadow-md">
-        <h1 className="text-4xl font-bold">Visualização de Lâminas - Histologia UFAL</h1>
+        <h1 className="text-4xl font-serif font-bold">Visualização de Lâminas - Histologia UFAL</h1>
       </header>
 
+      {/* Main Content */}
       <main className="flex-grow mt-4">
         <section className="container px-2">
-          <h2 className="text-2xl font-semibold mb-4">Bem-vindo ao sistema de visualização de lâminas</h2>
-          <div className="flex items-center space-x-2 mb-2">
-            <p>No computador basta passar o cursor do mouse por cima da imagem.</p>
+          <h2 className="text-2xl font-medium font-sans mb-4">Bem-vindo ao sistema de visualização de lâminas</h2>
+          <div className="flex flex-col md:flex-row items-start justify-between mb-6 space-y-4 md:space-y-0 sm:items-start sm:justify-start">
+            <OrganDropdown
+              selectedOrgan={selectedOrgan}
+              setSelectedOrgan={setSelectedOrgan}
+              organs={organs}
+            />
           </div>
-          <div className="flex items-center space-x-2 mb-6">
-            <p>No celular basta clicar na imagem.</p>
+
+          {/* Instruções */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 mb-6">
+            <div className="flex items-center space-x-2">
+              <div className="w-5 h-5">
+                <MdOutlineComputer className="text-xl"/>
+              </div>
+              <p className="font-light">No computador, passe o cursor do mouse por cima da imagem.</p>
+            </div>
+            <div className="flex items-center space-x-2">
+              <div className="w-5 h-5">
+                <SlScreenSmartphone className="text-xl"/>
+              </div>
+              <p className="font-light">No celular, clique na imagem.</p>
+            </div>
           </div>
+
+          {/* Slide Items */}
           <div className="flex flex-wrap gap-6">
             <ul className="flex flex-row flex-wrap gap-6 w-full pb-3">
-              {slidesData.map((slide: SlideData) => (
-                <li
+              {filteredSlides.map((slide: SlideData) => (
+                <SlideItem
                   key={slide.id}
-                  className="bg-white rounded-lg shadow-md p-4 flex-1 min-w-[300px] max-w-[400px] list-none "
-                >
-                  <div className="group relative">
-                    <img
-                      src={getImageUrl(slide.originalImage, false)}
-                      alt={slide.title}
-                      className={`rounded-md mb-2 transition-opacity duration-300 cursor-pointer ${
-                        isClicked === slide.id ? 'opacity-0' : 'opacity-100'
-                      } group-hover:opacity-0`}
-                      onClick={() => toggleImage(slide.id)}
-                    />
-                    <img
-                      src={getImageUrl(slide.modifiedImage, true)}
-                      alt={`${slide.title} Hover`}
-                      className={`rounded-md mb-2 absolute top-0 left-0 transition-opacity duration-300 cursor-pointer ${
-                        isClicked === slide.id ? 'opacity-100' : 'opacity-0'
-                      } group-hover:opacity-100`}
-                    />
-                  </div>
-                  <div className="flex items-center justify-between mt-4">
-                    <h3 className="text-xl font-bold">{slide.title}</h3>
-                    <button
-                      onClick={resetImage}
-                      className="ml-4 px-3 py-1.5 text-sm md:px-4 md:py-2 md:text-base bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                    >
-                      Voltar à imagem original
-                    </button>
-                  </div>
-                  <p className="text-neutral-950">
-                    <span className="font-bold underline">Orgão pertencente:</span> {slide.organ}
-                  </p>
-                  <p className="text-gray-600">{slide.description}</p>
-                </li>
+                  slide={slide}
+                  isClicked={isClicked}
+                  toggleImage={toggleImage}
+                  resetImage={resetImage}
+                  getImageUrl={getImageUrl}
+                />
               ))}
             </ul>
           </div>
         </section>
       </main>
 
+      {/* Footer */}
       <footer className="bg-blue-600 text-white text-center p-4 mt-auto">
         <div className="flex flex-row justify-center items-center space-x-2">
           <div className="flex justify-center items-center space-x-1.5">

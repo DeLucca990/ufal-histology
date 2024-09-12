@@ -12,7 +12,7 @@ const slidesData: SlideData[] = [
     id: 1,
     title: "Lâmina 1",
     description: "Descrição da lâmina 1: Lorem ipsum odor amet, consectetuer adipiscing elit...",
-    organ: "Glândula Sebácea",
+    organ: "Orgão 1",
     originalImage: 'glandula-sebacea',
     modifiedImage: 'glandula-sebacea-mod'
   },
@@ -20,7 +20,7 @@ const slidesData: SlideData[] = [
     id: 2,
     title: "Lâmina 2",
     description: "Descrição da lâmina 2: Netus massa elementum ullamcorper ad ex egestas...",
-    organ: "Glândula Sebácea",
+    organ: "Orgão 2",
     originalImage: 'glandula-sebacea',
     modifiedImage: 'glandula-sebacea-mod'
   },
@@ -28,7 +28,7 @@ const slidesData: SlideData[] = [
     id: 3,
     title: "Lâmina 3",
     description: "Descrição da lâmina 3: Netus massa elementum ullamcorper ad ex egestas...",
-    organ: "Glândula Sebácea",
+    organ: "Orgão 3",
     originalImage: 'glandula-sebacea',
     modifiedImage: 'glandula-sebacea-mod'
   },
@@ -36,7 +36,7 @@ const slidesData: SlideData[] = [
     id: 4,
     title: "Lâmina 4",
     description: "Descrição da lâmina 4: Netus massa elementum ullamcorper ad ex egestas...",
-    organ: "Glândula Sebácea",
+    organ: "Orgão 4",
     originalImage: 'glandula-sebacea',
     modifiedImage: 'glandula-sebacea-mod'
   },
