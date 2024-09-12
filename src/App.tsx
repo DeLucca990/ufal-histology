@@ -51,7 +51,7 @@ function App() {
           <div className="flex justify-center items-center space-x-1.5">
             <p>Maria Clara Leão</p>
             <a href="https://www.linkedin.com/in/maria-clara-le%C3%A3o-de-andrade-4279552b6/" target="_blank" rel="noopener noreferrer">
-              <FaLinkedin className="text-2xl" />
+              <FaLinkedin className="text-2xl"  />
             </a>
           </div>
         </div>
