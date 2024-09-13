@@ -60,9 +60,9 @@ const OrganDropdown: React.FC<OrganDropdownProps> = ({ selectedOrgan, setSelecte
             className="p-2 border-b border-gray-200 rounded-t-2xl w-full"
           />
 
-          <ul className="max-h-48 overflow-y-auto rounded-b-2xl">
+          <ul className="max-h-48 overflow-y-auto no-scrollbar rounded-b-2xl">
             <li
-              className="p-2 hover:bg-gray-100 cursor-pointer"
+              className="p-2 hover:bg-gray-100 cursor-pointer underline"
               onClick={() => {
                 setSelectedOrgan('');
                 setDropdownOpen(false);

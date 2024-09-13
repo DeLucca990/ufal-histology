@@ -8,6 +8,15 @@ import { HiOutlineAcademicCap } from "react-icons/hi";
 import { PiLineVertical } from "react-icons/pi";
 import { SlScreenSmartphone } from "react-icons/sl";
 import { MdOutlineComputer } from "react-icons/md";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+} from "@/components/ui/drawer"
 
 interface SlideData {
   id: number;
@@ -21,6 +30,8 @@ interface SlideData {
 function App() {
   const [isClicked, setIsClicked] = useState<number | boolean>(false);
   const [selectedOrgan, setSelectedOrgan] = useState('');
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
+  const [selectedSlide, setSelectedSlide] = useState<SlideData | null>(null);
 
   const organs = Array.from(new Set(slidesData.map(slide => slide.organ)));
 
@@ -36,6 +47,11 @@ function App() {
     setIsClicked(false);
   };
 
+  const handleOpenDrawer = (slide: SlideData) => {
+    setSelectedSlide(slide);
+    setDrawerOpen(true);
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       {/* Header */}
@@ -46,7 +62,14 @@ function App() {
       {/* Main Content */}
       <main className="flex-grow mt-4">
         <section className="container px-2">
-          <h2 className="text-2xl font-medium font-sans mb-4">Bem-vindo ao sistema de visualização de lâminas</h2>
+          <h2 className="text-2xl font-medium font-sans mb-2">
+            Bem-vindo ao Sistema de Visualização de Lâminas Histológicas da Universidade Federal de Alagoas.
+          </h2>
+          <h3 className="text-xl sm:text-xl font-sans font-medium mb-4 leading-relaxed">
+            Este site foi criado para oferecer uma experiência intuitiva e clara na visualização de diferentes estruturas histológicas. 
+            Explore cada lâmina e aprofunde seu conhecimento sobre a diversidade celular e tecidual.
+          </h3>
+          <p className="mb-2 ml-2 font-bold">Aplique Filtros</p>
           <div className="flex flex-col md:flex-row items-start justify-between mb-6 space-y-4 md:space-y-0 sm:items-start sm:justify-start">
             <OrganDropdown
               selectedOrgan={selectedOrgan}
@@ -82,12 +105,34 @@ function App() {
                   toggleImage={toggleImage}
                   resetImage={resetImage}
                   getImageUrl={getImageUrl}
+                  handleOpenDrawer={() => handleOpenDrawer(slide)}
                 />
               ))}
             </ul>
           </div>
         </section>
       </main>
+        
+      {/* Drawer */}
+      {selectedSlide && (
+        <Drawer open={isDrawerOpen} onOpenChange={setDrawerOpen}>
+          <DrawerContent>
+            <DrawerHeader>
+              <DrawerTitle>
+                {selectedSlide.title}
+              </DrawerTitle>
+              <DrawerDescription>
+                Descrição Completa: {selectedSlide.description}
+              </DrawerDescription>
+            </DrawerHeader>
+            <DrawerFooter>
+              <DrawerClose asChild>
+                <button className="text-white bg-blue-600 p-2 rounded">Fechar</button>
+              </DrawerClose>
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
+      )}
 
       {/* Footer */}
       <footer className="bg-blue-600 text-white text-center p-4 mt-auto">
