@@ -65,8 +65,8 @@ function App() {
           <h2 className="text-2xl font-medium font-sans mb-2">
             Bem-vindo ao Sistema de Visualização de Lâminas Histológicas da Universidade Federal de Alagoas.
           </h2>
-          <h3 className="text-xl sm:text-xl font-sans font-medium mb-4 leading-relaxed">
-            Este site foi criado para oferecer uma experiência intuitiva e clara na visualização de diferentes estruturas histológicas. 
+          <h3 className="text-xl sm:text-xl font-sans font-small mb-4 text-gray-500 leading-relaxed">
+            Este site foi criado com o objetivo de oferecer uma experiência intuitiva e clara na visualização de diferentes estruturas histológicas. 
             Explore cada lâmina e aprofunde seu conhecimento sobre a diversidade celular e tecidual.
           </h3>
           <p className="mb-2 ml-2 font-bold">Aplique Filtros</p>

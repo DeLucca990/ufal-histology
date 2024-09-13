@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { FaChevronDown } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface OrganDropdownProps {
   selectedOrgan: string;
@@ -24,7 +25,7 @@ const OrganDropdown: React.FC<OrganDropdownProps> = ({ selectedOrgan, setSelecte
           .replace(/[\u0300-\u036f]/g, '') 
       )
   );
-  
+
   return (
     <div className="relative w-full max-w-xs">
       <div className="relative">
@@ -49,42 +50,49 @@ const OrganDropdown: React.FC<OrganDropdownProps> = ({ selectedOrgan, setSelecte
           {selectedOrgan ? <IoClose className="text-xl hover:text-red-500" /> : <FaChevronDown className="text-xl" />}
         </button>
       </div>
+      <AnimatePresence>
+        {dropdownOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="absolute w-full mt-2 bg-white border border-gray-300 rounded-2xl shadow-lg z-10"
+          >
+            <input
+              type="text"
+              placeholder="Pesquisar órgão..."
+              value={organSearchTerm}
+              onChange={(e) => setOrganSearchTerm(e.target.value)}
+              className="p-2 border-b border-gray-200 rounded-t-2xl w-full"
+            />
 
-      {dropdownOpen && (
-        <div className="absolute w-full mt-2 bg-white border border-gray-300 rounded-2xl shadow-lg z-10">
-          <input
-            type="text"
-            placeholder="Pesquisar órgão..."
-            value={organSearchTerm}
-            onChange={(e) => setOrganSearchTerm(e.target.value)}
-            className="p-2 border-b border-gray-200 rounded-t-2xl w-full"
-          />
-
-          <ul className="max-h-48 overflow-y-auto no-scrollbar rounded-b-2xl">
-            <li
-              className="p-2 hover:bg-gray-100 cursor-pointer underline"
-              onClick={() => {
-                setSelectedOrgan('');
-                setDropdownOpen(false);
-              }}
-            >
-              Todos os órgãos
-            </li>
-            {filteredOrgans.map((organ, index) => (
+            <ul className="max-h-48 overflow-y-auto no-scrollbar rounded-b-2xl">
               <li
-                key={index}
-                className="p-2 hover:bg-gray-100 cursor-pointer"
+                className="p-2 hover:bg-gray-100 cursor-pointer underline"
                 onClick={() => {
-                  setSelectedOrgan(organ);
+                  setSelectedOrgan('');
                   setDropdownOpen(false);
                 }}
               >
-                {organ}
+                Todos os órgãos
               </li>
-            ))}
-          </ul>
-        </div>
-      )}
+              {filteredOrgans.map((organ, index) => (
+                <li
+                  key={index}
+                  className="p-2 hover:bg-gray-100 cursor-pointer"
+                  onClick={() => {
+                    setSelectedOrgan(organ);
+                    setDropdownOpen(false);
+                  }}
+                >
+                  {organ}
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
