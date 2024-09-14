@@ -17,6 +17,12 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 interface SlideData {
   id: number;
@@ -65,33 +71,51 @@ function App() {
           <h2 className="text-2xl font-medium font-sans mb-2">
             Bem-vindo ao Sistema de Visualização de Lâminas Histológicas da Universidade Federal de Alagoas.
           </h2>
-          <h3 className="text-xl sm:text-xl font-sans font-small mb-4 text-gray-500 leading-relaxed">
+          <h3 className="text-xl sm:text-xl font-sans font-small text-gray-500 leading-relaxed">
             Este site foi criado com o objetivo de oferecer uma experiência intuitiva e clara na visualização de diferentes estruturas histológicas. 
             Explore cada lâmina e aprofunde seu conhecimento sobre a diversidade celular e tecidual.
           </h3>
-          <p className="mb-2 ml-2 font-bold">Aplique Filtros</p>
+          <Accordion type="single" collapsible>
+            <AccordionItem value="item-1">
+              <AccordionTrigger className="text-lg font-semibold text-blue-600">
+                Instruções para o bom uso
+              </AccordionTrigger>
+              <AccordionContent className="mt-0 space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {/* Instrução para computadores */}
+                  <div className="flex items-start space-x-4">
+                    <div className="text-blue-600 bg-blue-100 p-2 rounded-full">
+                      <MdOutlineComputer className="text-3xl" />
+                    </div>
+                    <div>
+                      <p className="font-medium text-gray-700">Computador</p>
+                      <p className="text-gray-500">
+                        Passe o cursor do mouse por cima da imagem para interagir.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Instrução para celulares */}
+                  <div className="flex items-start space-x-4">
+                    <div className="text-blue-600 bg-blue-100 p-2 rounded-full">
+                      <SlScreenSmartphone className="text-3xl" />
+                    </div>
+                    <div>
+                      <p className="font-medium text-gray-700">Celular</p>
+                      <p className="text-gray-500">Clique na imagem para interagir.</p>
+                    </div>
+                  </div>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+          <p className="mb-2 mt-2 ml-2 font-bold">Aplique Filtros</p>
           <div className="flex flex-col md:flex-row items-start justify-between mb-6 space-y-4 md:space-y-0 sm:items-start sm:justify-start">
             <OrganDropdown
               selectedOrgan={selectedOrgan}
               setSelectedOrgan={setSelectedOrgan}
               organs={organs}
             />
-          </div>
-
-          {/* Instruções */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 mb-6">
-            <div className="flex items-center space-x-2">
-              <div className="w-5 h-5">
-                <MdOutlineComputer className="text-xl"/>
-              </div>
-              <p className="font-light">No computador, passe o cursor do mouse por cima da imagem.</p>
-            </div>
-            <div className="flex items-center space-x-2">
-              <div className="w-5 h-5">
-                <SlScreenSmartphone className="text-xl"/>
-              </div>
-              <p className="font-light">No celular, clique na imagem.</p>
-            </div>
           </div>
 
           {/* Slide Items */}
